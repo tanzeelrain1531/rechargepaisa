@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  html,
+  body {
+    /* Dark indigo base — premium gaming foundation */
+    background-color: oklch(0.18 0.08 255);
+  }
+
+  :root {
+    /* Border radius — soft 4px corners matching Epic/Athenahealth standard */
+    --radius: 0.75rem;
+
+    --background: 0.13 0.08 255;
+    --foreground: 0.98 0.01 270;
+    --card: 0.22 0.1 250;
+    --card-foreground: 0.96 0.01 270;
+    --popover: 0.22 0.1 250;
+    --popover-foreground: 0.96 0.01 270;
+    --primary: 0.62 0.22 60;
+    --primary-foreground: 0.15 0.08 260;
+    --secondary: 0.55 0.18 180;
+    --secondary-foreground: 0.98 0.01 270;
+    --muted: 0.35 0.05 260;
+    /* 0.55 L gives ~3.9:1 on white — borderline WCAG AA for small text.
+       Use text-sm (14px) or larger where muted-foreground is critical. */
+    --muted-foreground: 0.65 0.05 270; /* L=0.45 meets WCAG AA 4.5:1 for small text on white */
+    --accent: 0.65 0.15 50;
+    --accent-foreground: 0.15 0.08 260;
+    --destructive: 0.58 0.24 20;
+    --destructive-foreground: 0.98 0.01 270;
+    --success: 0.6 0.16 140;
+    --success-foreground: 0.15 0.08 260;
+    --warning: 0.65 0.18 70;
+    --warning-foreground: 0.15 0.08 260;
+    --danger: 0.58 0.24 20;
+    --danger-foreground: 0.98 0.01 270;
+    /* Darkened from 0.89 → 0.82 so input fields are clearly delineated
+       from white background — matching clinical EHR field visibility */
+    --border: 0.28 0.08 255;
+    --input: 0.26 0.08 255;
+    --ring: 0.62 0.22 60;
+    --chart-1: 0.62 0.22 60;
+    --chart-2: 0.55 0.18 180;
+    --chart-3: 0.58 0.18 140;
+    --chart-4: 0.65 0.18 70;
+    --chart-5: 0.52 0.14 200;
+    --sidebar: 0.18 0.08 255;
+    --sidebar-foreground: 0.94 0.02 270;
+    --sidebar-primary: 0.62 0.22 60;
+    --sidebar-primary-foreground: 0.15 0.08 260;
+    --sidebar-accent: 0.55 0.18 180;
+    --sidebar-accent-foreground: 0.98 0.01 270;
+    --sidebar-border: 0.25 0.08 255;
+    --sidebar-ring: 0.62 0.22 60;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "DM Sans", sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-display {
+    @apply text-2xl font-bold tracking-tight;
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+  .text-heading {
+    @apply text-xl font-bold;
+    font-family: "Bricolage Grotesque", sans-serif;
+  }
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-90 active:scale-95;
+  }
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground px-4 py-2 rounded-lg font-semibold transition-all hover:opacity-90 active:scale-95;
+  }
+  .card-elevated {
+    @apply bg-card border border-border rounded-xl shadow-lg;
+  }
+  .game-card {
+    @apply bg-card border border-border rounded-xl p-4 hover:shadow-xl transition-all cursor-pointer;
+  }
+  .wallet-section {
+    @apply bg-gradient-to-r from-primary/20 to-accent/20 rounded-xl p-6 border border-primary/30;
+  }
+}
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 180ms ease-out both;
+}

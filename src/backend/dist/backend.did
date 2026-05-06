@@ -1,0 +1,109 @@
+type WithdrawalStatus = 
+ variant {
+   Approved;
+   Pending;
+   Rejected;
+ };
+type WithdrawalInfo = 
+ record {
+   amount: nat;
+   id: nat;
+   processedAt: opt Time;
+   requestedAt: Time;
+   status: WithdrawalStatus;
+   userId: principal;
+ };
+type WalletInfo = 
+ record {
+   balance: nat;
+   joinTime: Time;
+   owner: principal;
+   totalEarned: nat;
+   totalInvested: nat;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type TxType = 
+ variant {
+   Bonus;
+   Deposit;
+   GameEntry;
+   GameWin;
+   Withdrawal;
+   WithdrawalRejected;
+ };
+type Transaction = 
+ record {
+   amount: nat;
+   gameId: opt nat;
+   id: nat;
+   note: text;
+   timestamp: Time;
+   txType: TxType;
+   userId: principal;
+ };
+type Time = int;
+type RevenueStats = 
+ record {
+   netProfit: nat;
+   totalActiveGames: nat;
+   totalPaidOut: nat;
+   totalRevenue: nat;
+   totalUsers: nat;
+ };
+type GameInfo = 
+ record {
+   description: text;
+   entryFee: nat;
+   id: nat;
+   isActive: bool;
+   maxWinnings: nat;
+   name: text;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  /// Add a new game (admin).
+  adminAddGame: (name: text, description: text, entryFee: nat, maxWinnings:
+   nat) -> (nat);
+  /// List all registered users (admin).
+  adminGetAllUsers: () -> (vec WalletInfo) query;
+  adminGetRevenueStats: () -> (RevenueStats) query;
+  /// Get a specific user's wallet and recent transactions (admin).
+  adminGetUserDetails: (userId: principal) ->
+   (opt record {
+          WalletInfo;
+          vec Transaction;
+        }) query;
+  /// Update an existing game (admin).
+  adminUpdateGame: (id: nat, name: text, description: text, entryFee: 
+   nat, maxWinnings: nat, isActive: bool) -> (bool);
+  /// Approve a withdrawal request (admin).
+  approveWithdrawal: (id: nat) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  getCallerUserRole: () -> (UserRole) query;
+  /// Get caller's wallet info.
+  getMyWallet: () -> (opt WalletInfo) query;
+  /// Get caller's transaction history.
+  getTransactionHistory: () -> (vec Transaction) query;
+  /// Returns true if the caller is an admin.
+  isAdmin: () -> (bool) query;
+  isCallerAdmin: () -> (bool) query;
+  /// List all active games (public).
+  listActiveGames: () -> (vec GameInfo) query;
+  /// List all pending withdrawals (admin).
+  listPendingWithdrawals: () -> (vec WithdrawalInfo) query;
+  /// Play a game — deducts entry fee from wallet; returns session id.
+  playGame: (gameId: nat) -> (nat);
+  /// Admin records game result; credits winnings if won.
+  recordGameResult: (sessionId: nat, didWin: bool, winAmount: nat) -> ();
+  /// Register new user — creates wallet and gives 10 paisa signup bonus.
+  registerUser: () -> (WalletInfo);
+  /// Reject a withdrawal request — returns balance to user (admin).
+  rejectWithdrawal: (id: nat) -> ();
+  /// Request a withdrawal (minimum 1 paisa).
+  requestWithdrawal: (amount: nat) -> (nat);
+}

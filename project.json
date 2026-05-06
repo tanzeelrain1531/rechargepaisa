@@ -1,0 +1,24 @@
+{
+  "overview": "A real-money gaming and recharge platform where users earn money by playing games after investing a small amount. New users get 10 paisa free bonus to start. Admin dashboard tracks user investments, profits, and manages withdrawal requests.",
+  "features": [
+    "10 paisa free bonus for new users",
+    "Wallet system with real-time balance",
+    "Game library with entry fees and winnings",
+    "Transaction history for all balance movements",
+    "Admin dashboard for revenue tracking",
+    "Withdrawal request management",
+    "User management with detailed ledgers",
+    "Protected admin and user login via Internet Identity"
+  ],
+  "category": "gaming",
+  "tags": [
+    "gaming",
+    "recharge",
+    "wallet",
+    "money",
+    "paisa",
+    "india",
+    "admin"
+  ],
+  "last_updated": "2026-05-06T01:20:29.370Z"
+}

@@ -1,0 +1,141 @@
+// Version: 3.0.0
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type GameResult__640913210 = {#Loss; #Pending; #Win : Nat};
+type GameSession__844063274 =
+  {
+    entryFee : Nat;
+    gameId : Nat;
+    id : Nat;
+    var result : GameResult__640913210;
+    timestamp : Time__900049286;
+    userId : Principal
+  };
+type Game__42905640 =
+  {
+    description : Text;
+    var entryFee : Nat;
+    id : Nat;
+    var isActive : Bool;
+    var maxWinnings : Nat;
+    name : Text
+  };
+type Int__270357528 = Int__616954475;
+type Int__616954475 = Int;
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Time__796480547 = Int__270357528;
+type Time__900049286 = Time__796480547;
+type Transaction__865268250 =
+  {
+    amount : Nat;
+    gameId : ?Nat;
+    id : Nat;
+    note : Text;
+    timestamp : Time__900049286;
+    txType : TxType__343382301;
+    userId : Principal
+  };
+type TxType__343382301 =
+  {#Bonus; #Deposit; #GameEntry; #GameWin; #Withdrawal; #WithdrawalRejected};
+type UserRole__1073662873 = {#admin; #guest; #user};
+type UserWallet__302414816 =
+  {
+    var balance : Nat;
+    joinTime : Time__900049286;
+    owner : Principal;
+    var totalEarned : Nat;
+    var totalInvested : Nat
+  };
+type WithdrawalRequest__57663818 =
+  {
+    amount : Nat;
+    id : Nat;
+    var processedAt : ?Time__900049286;
+    requestedAt : Time__900049286;
+    var status : WithdrawalStatus__44068968;
+    userId : Principal
+  };
+type WithdrawalStatus__44068968 = {#Approved; #Pending; #Rejected};
+actor ({
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  stable games :
+    {
+      var root : Node__46230540<Nat, Game__42905640>;
+      var size : Nat__490723111
+    };
+  stable var nextGameId : Nat;
+  stable var nextSessionId : Nat;
+  stable var nextTxId : Nat;
+  stable var nextWithdrawalId : Nat;
+  stable sessions :
+    {
+      var root : Node__46230540<Nat, GameSession__844063274>;
+      var size : Nat__490723111
+    };
+  stable transactions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Transaction__865268250]];
+      var elementIndex : Nat__490723111
+    };
+  stable wallets :
+    {
+      var root : Node__46230540<Principal, UserWallet__302414816>;
+      var size : Nat__490723111
+    };
+  stable withdrawals :
+    {
+      var root : Node__46230540<Nat, WithdrawalRequest__57663818>;
+      var size : Nat__490723111
+    }
+}, {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  stable games :
+    {
+      var root : Node__46230540<Nat, Game__42905640>;
+      var size : Nat__490723111
+    };
+  stable var nextGameId : Nat;
+  stable var nextSessionId : Nat;
+  stable var nextTxId : Nat;
+  stable var nextWithdrawalId : Nat;
+  stable sessions :
+    {
+      var root : Node__46230540<Nat, GameSession__844063274>;
+      var size : Nat__490723111
+    };
+  stable transactions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Transaction__865268250]];
+      var elementIndex : Nat__490723111
+    };
+  stable wallets :
+    {
+      var root : Node__46230540<Principal, UserWallet__302414816>;
+      var size : Nat__490723111
+    };
+  stable withdrawals :
+    {
+      var root : Node__46230540<Nat, WithdrawalRequest__57663818>;
+      var size : Nat__490723111
+    }
+});
